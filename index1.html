@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <meta charset="UTF-8">
+    <title>weather project</title>
+    <style>
+        body {
+
+            background-color: black;
+            color: white;
+
+
+        }
+        span{ 
+         color: green; 
+         text-decoration: underline; 
+         font-style: italic; 
+         font-weight: bold; 
+         font-size: 26px; 
+         }  
+        #rep{
+            background-color: blue;
+            width:100%;
+            height:160px;
+        }
+    </style>
+</head>
+
+<body>
+   
+    <h3>
+        Weather PROJECT
+        <small class="text-muted">DISPLAY TEMP</small>
+    </h3>
+    <br>
+    <br>
+
+
+
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">NAME OF THE CITY</span>
+        </div>
+        <input type="text" class="form-control" id="city" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+    </div><br>
+
+
+    <input type="button" value="SUBMIT" onclick="weathercity()" class="btn btn-secondary">
+    <div id="list"></div>
+
+
+    <h1 id="rep"></h1>
+    <script>
+        console.log("hello world");
+
+
+
+        function weathercity() {
+            var cname = document.getElementById("city").value.toUpperCase();
+
+            console.log(cname);
+            //https://api.openweathermap.org/data/2.5/weather?q=ranchi&appid=b299a567b74a3fc17ce5b3f07a720021&units=metric
+            var ur = "https://api.openweathermap.org/data/2.5/weather?q=";
+            var place = cname;
+            var iid = "&appid=b299a567b74a3fc17ce5b3f07a720021&units=metric";
+            var url = ur + place + iid;
+            var aj = new XMLHttpRequest();
+            aj.open('GET', url, true);
+            aj.send();
+
+            aj.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var respnse = this.responseText; //doubt
+
+                    var jsonObj = JSON.parse(respnse);
+                    console.log(jsonObj); //to see the object in console.
+                    console.log(jsonObj.sys.country);
+
+                    document.getElementById('rep').innerHTML = '<span>searching for weather:-</span>' + cname + '<br><span style="color:red;margin-left:200px">TEMP:=</span> ' + jsonObj.main.temp + "<sup>o</sup><strong>C</strong><br> <span style='color:red;margin-left:150px'>COUNTRY:-</span>"+jsonObj.sys.country;
+
+                }
+            }
+
+        }
+    </script>
+        <h1 style="color:red"> Project by:</h1>
+</body>
+
+</html>
